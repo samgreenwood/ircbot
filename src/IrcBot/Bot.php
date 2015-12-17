@@ -79,9 +79,15 @@ class Bot
             $message = trim($data['message']);
 
             foreach ($this->commands as $command) {
-                if ($command->trigger() == $message) {
+
+                if (Str::startsWith($message, $command->trigger())) {
+
+                    $args = array_values(array_filter(explode(' ', $message), function ($item) use ($command) {
+                        return $item != $command->trigger();
+                    }));
+
                     try {
-                        $response = $command->run();
+                        $response = $command->run($args);
                         $bucket->getSource()->say($response);
                     } catch (\Exception $e) {
                         $bucket->getSource()->say("Something went wrong " . $e->getMessage());
