@@ -80,6 +80,8 @@ class Bot
 
             foreach ($this->commands as $command) {
 
+                $command = new $command;
+
                 if (Str::startsWith($message, $command->trigger())) {
 
                     $args = array_values(array_filter(explode(' ', $message), function ($item) use ($command) {
@@ -103,8 +105,16 @@ class Bot
     /**
      * @param Command $command
      */
-    public function addCommand(Command $command)
+    public function addCommand($command)
     {
         $this->commands[] = $command;
+    }
+
+    /**
+     * @return array
+     */
+    public function registeredCommands()
+    {
+        return $this->commands;
     }
 }
