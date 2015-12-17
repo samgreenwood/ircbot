@@ -1,0 +1,11 @@
+{
+  "require": {
+    "hoa/irc": "^0.15.09",
+    "illuminate/support": "^5.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "IrcBot\\": "src/IrcBot"
+    }
+  }
+}
